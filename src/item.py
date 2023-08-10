@@ -19,6 +19,7 @@ class Item:
         self.__name = name
         self.price = price
         self.quantity = quantity
+        Item.all.append(self)
 
     @property
     def name(self):
@@ -50,7 +51,7 @@ class Item:
         """
         Создает экземпляры класса Item из данных фала items.csv.
         """
-        with open('../src/items.csv', encoding='windows-1251') as file:
+        with open('D:/electronics-shop-project/src/items.csv', encoding='windows-1251') as file:
             reader_object = csv.DictReader(file)
             for row in reader_object:
                 name = row['name']
