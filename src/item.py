@@ -51,7 +51,8 @@ class Item:
         """
         Создает экземпляры класса Item из данных фала items.csv.
         """
-        with open('D:/electronics-shop-project/src/items.csv', encoding='windows-1251') as file:
+        cls.all.clear()
+        with open('../src/items.csv', encoding='windows-1251') as file:
             reader_object = csv.DictReader(file)
             for row in reader_object:
                 name = row['name']
