@@ -66,3 +66,15 @@ class Item:
         Преобразует строку в число.
         """
         return int(float(value))
+
+    def __repr__(self):
+        """
+        Возвращает строковое представление объекта Item для отладки.
+        """
+        return f"Item('{self.name}', {self.price}, {self.quantity})"
+
+    def __str__(self):
+        """
+        Возвращает строковое представление объекта Item для вывода пользователю.
+        """
+        return self.name
