@@ -78,3 +78,8 @@ class Item:
         Возвращает строковое представление объекта Item для вывода пользователю.
         """
         return self.name
+
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise TypeError("Unsupported operand type for +: 'Item' and {}".format(type(other).__name__))
