@@ -49,23 +49,29 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls) -> None:
         """
-        Создает экземпляры класса Item из данных фала items.csv.
+        Создает экземпляры класса Item из данных файла items.csv.
         """
         cls.all.clear()
-        with open('../src/items.csv', encoding='windows-1251') as file:
-            reader_object = csv.DictReader(file)
-            for row in reader_object:
-                name = row['name']
-                price = cls.string_to_number(row['price'])
-                quantity = int(row['quantity'])
-                cls(name, price, quantity)
+        try:
+            with open('items.csv', encoding='windows-1251') as file:
+                reader_object = csv.DictReader(file)
+                for row in reader_object:
+                    if 'name' not in row or 'price' not in row or 'quantity' not in row:
+                        raise InstantiateCSVError("Файл item.csv поврежден")
+                    name = row['name']
+                    price = cls.string_to_number(row['price'])
+                    quantity = int(row['quantity'])
+                    cls(name, price, quantity)
+
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
 
     @staticmethod
     def string_to_number(value: str) -> float:
         """
         Преобразует строку в число.
         """
-        return int(float(value))
+        return float(value)
 
     def __repr__(self):
         """
@@ -83,3 +89,10 @@ class Item:
         if isinstance(other, Item):
             return self.quantity + other.quantity
         raise TypeError("Unsupported operand type for +: 'Item' and {}".format(type(other).__name__))
+
+
+class InstantiateCSVError(Exception):
+    """
+    Класс-исключение для ошибки создания экземпляров класса Item из файла items.csv.
+    """
+    pass
